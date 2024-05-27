@@ -1,17 +1,23 @@
 /* eslint-disable prettier/prettier */
-import { expect, describe, it } from 'vitest'
+import { expect, describe, it, beforeEach } from 'vitest'
 import { RegisterUseCase } from './register-usecase'
 import { compare } from 'bcryptjs'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { UserAlreadyExistsError } from '../errors/user-already-exists-error'
+import { UserRepository } from '@/repositories/user-repository'
+
+let repository: UserRepository
+let sut: RegisterUseCase
 
 describe('Register Use Case', () => {
-  it('Should be able to register', async () => {
-    const repository = new InMemoryUserRepository()
-    const registerUseCase = new RegisterUseCase(repository)
+  beforeEach(() => {
+    repository = new InMemoryUserRepository()
+    sut = new RegisterUseCase(repository)
+  })
 
+  it('Should be able to register', async () => {
     const password = '123456'
-    const { user } = await registerUseCase.execute({
+    const { user } = await sut.execute({
       name: 'Cristian',
       email: 'cristian@gmail.com',
       password,
@@ -21,11 +27,8 @@ describe('Register Use Case', () => {
   })
 
   it('Should hash user password upon registration', async () => {
-    const repository = new InMemoryUserRepository()
-    const registerUseCase = new RegisterUseCase(repository)
-
     const password = '123456'
-    const { user } = await registerUseCase.execute({
+    const { user } = await sut.execute({
       name: 'Cristian',
       email: 'cristian@gmail.com',
       password,
@@ -40,18 +43,15 @@ describe('Register Use Case', () => {
   })
 
   it('Should not be able register with same email twice', async () => {
-    const repository = new InMemoryUserRepository()
-    const registerUseCase = new RegisterUseCase(repository)
-
     const password = '123456'
-    await registerUseCase.execute({
+    await sut.execute({
       name: 'Cristian',
       email: 'cristian@gmail.com',
       password,
     })
 
     await expect(() =>
-      registerUseCase.execute({
+      sut.execute({
         name: 'Cristian',
         email: 'cristian@gmail.com',
         password,
