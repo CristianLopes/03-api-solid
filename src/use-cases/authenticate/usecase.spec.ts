@@ -3,7 +3,7 @@ import { expect, describe, it, beforeEach } from 'vitest'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import AuthenticateUseCase from './usecase'
 import { hash } from 'bcryptjs'
-import { InvalidCredentialsError } from '../errors/invalid-credentials'
+import { InvalidCredentials } from '../errors/invalid-credentials'
 import { UserRepository } from '@/repositories/user-repository'
 
 let repository: UserRepository
@@ -39,7 +39,7 @@ describe('Authenticate Use Case', () => {
         email: 'cristian@gmail.com',
         password: '123456',
       })
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
+    ).rejects.toBeInstanceOf(InvalidCredentials)
   })
 
   it('Should not be able to authenticate with wrong password', async () => {
@@ -57,6 +57,6 @@ describe('Authenticate Use Case', () => {
         email,
         password: password + '123',
       })
-    ).rejects.toBeInstanceOf(InvalidCredentialsError)
+    ).rejects.toBeInstanceOf(InvalidCredentials)
   })
 })
