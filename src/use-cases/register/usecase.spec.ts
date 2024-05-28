@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { expect, describe, it, beforeEach } from 'vitest'
-import { RegisterUseCase } from './register-usecase'
+import { RegisterUseCase } from './usecase'
 import { compare } from 'bcryptjs'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { UserAlreadyExistsError } from '../errors/user-already-exists-error'

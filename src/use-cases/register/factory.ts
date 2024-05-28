@@ -1,5 +1,5 @@
 import { PrismaUserRepository } from '@/repositories/prisma-user-repository'
-import { RegisterUseCase } from './register-usecase'
+import { RegisterUseCase } from './usecase'
 
 export function makeRegisterUseCase() {
   const userRepository = new PrismaUserRepository()
