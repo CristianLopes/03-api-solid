@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { User } from '@prisma/client'
 import { InvalidCredentials } from '../errors/invalid-credentials'
 import { UserRepository } from '@/repositories/user-repository'
